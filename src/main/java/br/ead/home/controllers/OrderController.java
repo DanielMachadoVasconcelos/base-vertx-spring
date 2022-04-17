@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @Component
@@ -24,14 +25,21 @@ public class OrderController {
 
     public void findAll(RoutingContext context) {
         log.info("Finding all the orders!");
-        var orders = orderService.findAll().stream()
-                .map(JsonObject::mapFrom)
-                .toList();
-        String body = new JsonArray(orders).encodePrettily();
-        context.response()
-                .putHeader("content-type", "application/json")
-                .setStatusCode(200)
-                .end(body);
+
+        orderService.findAll()
+                .map(orders -> orders.stream().map(JsonObject::mapFrom).toList())
+                .map(JsonArray::new)
+                .map(JsonArray::encodePrettily)
+                .subscribe(orders -> context.response()
+                        .putHeader("content-type", "application/json")
+                        .setStatusCode(200)
+                        .end(orders),
+                error -> context.response()
+                        .putHeader("content-type", "application/json")
+                        .setStatusCode(500)
+                        .end(new JsonObject(Map.of("code", "unknown","description", error.getMessage()))
+                                .encodePrettily()));
+
     }
 
     public void saveOrUpdate(RoutingContext context) {

@@ -1,0 +1,1 @@
+INSERT INTO broker.order_event (event_type, version, event_data) values ('ORDER_PLACED', 0, '{"amount":100.0,"customer_d":"be958551-1ec6-4754-a32a-f6a9f8b325cb","payment_method":"CREDIT_CARD","currency":"USD","order_lines":[{"product_id":"ca5de28b-3440-428f-8fb5-a215e03dde90","quantity":1,"unit_price":20.0}]}')
