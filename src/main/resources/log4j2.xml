@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%blue{%d{HH:mm:ss.SSS}} [%t] %highlight{%-5level} %magenta{%c{1.}} - %msg%n"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+
+        <Logger name="br.ead.home" level="DEBUG"/>
+        <logger name="io.netty" level="WARN"/>
+        <logger name="io.vertx" level="INFO"/>
+        <logger name="org.flywaydb.core" level="INFO"/>
+
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
