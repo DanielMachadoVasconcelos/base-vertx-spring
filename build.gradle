@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.6.6'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id "com.avast.gradle.docker-compose" version "0.14.9"
     id 'java'
 }
 
@@ -18,6 +19,17 @@ repositories {
     mavenCentral()
 }
 
+dockerCompose.isRequiredBy(test)
+
+dockerCompose {
+    projectName = project.name
+    projectNamePrefix  = 'docker-compose'
+    stopContainers = true
+    removeContainers = true
+    removeOrphans = true
+    forceRecreate = true
+}
+
 dependencies {
 
 
@@ -26,9 +38,13 @@ dependencies {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
     }
 
-    implementation 'io.vertx:vertx-web:4.2.6'
-    implementation 'io.vertx:vertx-pg-client:4.2.6'
-    implementation 'io.vertx:vertx-rx-java3:4.2.6'
+    implementation 'io.vertx:vertx-web:4.2.7'
+    implementation 'io.vertx:vertx-pg-client:4.2.7'
+    implementation 'io.vertx:vertx-sql-client-templates:4.2.7'
+    implementation 'io.vertx:vertx-rx-java3:4.2.7'
+    implementation 'io.vertx:vertx-web-client:4.2.7'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.2'
 
     implementation 'org.flywaydb:flyway-core'
 
@@ -47,6 +63,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
+    testLogging {
+        events "skipped", "failed"
+    }
 }

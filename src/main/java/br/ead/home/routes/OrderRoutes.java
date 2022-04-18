@@ -1,8 +1,7 @@
 package br.ead.home.routes;
 
-import br.ead.home.controllers.OrderController;
-import io.vertx.ext.web.Router;
-import io.vertx.ext.web.handler.BodyHandler;
+import br.ead.home.specifications.OrderController;
+import io.vertx.rxjava3.ext.web.Router;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.annotation.Order;
@@ -26,6 +25,9 @@ public class OrderRoutes {
 
         router.get("/api/v1/orders")
                 .handler(orderController::findAll);
+
+        router.get("/api/v1/orders/:orderId")
+                .handler(orderController::findById);
 
         router.post("/api/v1/orders")
                 .handler(orderController::saveOrUpdate);

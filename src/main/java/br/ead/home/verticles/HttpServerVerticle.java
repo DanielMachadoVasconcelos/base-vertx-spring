@@ -1,7 +1,7 @@
 package br.ead.home.verticles;
 
-import io.vertx.core.AbstractVerticle;
-import io.vertx.ext.web.Router;
+import io.vertx.rxjava3.core.AbstractVerticle;
+import io.vertx.rxjava3.ext.web.Router;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -18,12 +18,8 @@ public class HttpServerVerticle extends AbstractVerticle {
         log.info("Starting the Http Server");
         vertx.createHttpServer()
                 .requestHandler(router::handle)
-                .listen(config().getInteger("http.port", 8080), event -> {
-                    if(event.succeeded()){
-                        log.info("Server started sucessfully on port {}", event.result().actualPort());
-                    }else {
-                        log.error("Http server did not start successfully", event.cause());
-                    }
-                });
+                .rxListen(8080)
+                .subscribe(httpServer -> log.info("Server started successfully on port {}", httpServer.actualPort()),
+                        error -> log.error("Http server did not start successfully", error));
     }
 }

@@ -1,7 +1,7 @@
 package br.ead.home;
 
 import br.ead.home.verticles.HttpServerVerticle;
-import io.vertx.core.Vertx;
+import io.vertx.rxjava3.core.Vertx;
 import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;

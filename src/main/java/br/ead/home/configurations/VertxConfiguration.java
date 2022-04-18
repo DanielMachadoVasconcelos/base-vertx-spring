@@ -1,9 +1,8 @@
 package br.ead.home.configurations;
 
-import io.vertx.core.Vertx;
+import io.vertx.rxjava3.core.Vertx;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.context.annotation.ApplicationScope;
 
 @Configuration
 public class VertxConfiguration {
