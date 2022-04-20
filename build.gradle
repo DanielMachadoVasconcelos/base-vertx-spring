@@ -24,7 +24,7 @@ dockerCompose.isRequiredBy(test)
 dockerCompose {
     projectName = project.name
     projectNamePrefix  = 'docker-compose'
-    stopContainers = true
+    stopContainers = false
     removeContainers = true
     removeOrphans = true
     forceRecreate = true

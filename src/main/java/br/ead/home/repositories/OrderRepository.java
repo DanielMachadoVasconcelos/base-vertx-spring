@@ -13,6 +13,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 @Log4j2
 @Repository
@@ -51,7 +52,9 @@ public class OrderRepository {
     }
 
     public Maybe<Order> saveOrUpdate(Order order) {
-        var orderId = Optional.ofNullable(order.orderId()).filter(String::isBlank).orElse(UUID.randomUUID().toString());
+        var orderId = Optional.ofNullable(order.orderId())
+                .filter(Predicate.not(String::isBlank))
+                .orElse(UUID.randomUUID().toString());
         return SqlTemplate.forUpdate(sqlClient, SAVE_OR_UPDATE)
                 .mapFrom(TupleMapper.mapper(result -> Map.of("order_id", orderId, "amount", order.amount())))
                 .mapTo(Order.class)

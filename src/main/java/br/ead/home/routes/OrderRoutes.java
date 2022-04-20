@@ -1,6 +1,6 @@
 package br.ead.home.routes;
 
-import br.ead.home.specifications.OrderController;
+import br.ead.home.controllers.OrderController;
 import io.vertx.rxjava3.ext.web.Router;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;

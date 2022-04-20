@@ -1,4 +1,4 @@
-package br.ead.home.specifications;
+package br.ead.home.controllers;
 
 import br.ead.home.models.Order;
 import br.ead.home.services.OrderService;
@@ -57,11 +57,7 @@ public class OrderController {
                                 .putHeader("content-type", "application/json")
                                 .setStatusCode(201)
                                 .end(JsonObject.mapFrom(order).encodePrettily()),
-                        error -> context.response()
-                                .putHeader("content-type", "application/json")
-                                .setStatusCode(500)
-                                .end(new JsonObject(Map.of("code", "unknown", "description", error.getMessage()))
-                                        .encodePrettily()));
+                        error -> ErrorAdviceHandler.onError(error, context));
 
     }
 }
